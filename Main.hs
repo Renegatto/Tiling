@@ -5,7 +5,7 @@ import Data.List
 import Point
 import Paraboloid
 import ReversedTransformation as RT
-
+import qualified StraightTransformation
 import qualified Tests
 import qualified Tests.ReversedTransformation
 import qualified Tests.SwitchingCoordinates
