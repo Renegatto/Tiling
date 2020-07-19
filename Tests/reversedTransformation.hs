@@ -24,10 +24,12 @@ prop_savingRadius :: Double -> Double -> Coords -> Bool
 prop_savingRadius _ 0 _ = True
 prop_savingRadius mist focus p =
 
-  savingRadius (Mistake mist) (reversedTransformation parab) point where
+  savingRadius (Mistake mist) (reversedPointTransformation parab) point where
 
     point = Paraboloid.onParaboloid parab (Point.Cartesian p)
     parab = Paraboloid.Paraboloid focus
 
 check_saving_radius = Check.quickCheck $ Check.withMaxSuccess 100 prop where
-    prop = (prop_savingRadius 5)
+    prop = (prop_savingRadius 5) 
+
+hole = undefined

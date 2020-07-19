@@ -28,13 +28,14 @@ functionReversing dist dens fn =
     as_function $ CalcMethod.totalyInversedInRange (CalcMethod.Range 0 dist) dens fn where
         as_function (CalcMethod.ApproximateFunction f) = f
 
-transformation :: FunctionReversing -> Paraboloid -> (Point -> Point)
-transformation reversing (Paraboloid.Paraboloid focus) =  
+transformation :: FunctionReversing -> Paraboloid -> Point -> Point
+transformation reversing parab =  
 
-    expand_on_points $ reversing $ Reversed.radius' focus where
+    expand_on_points $ reversing $ Reversed.reversedRadiusTransformation parab where
 
         expand_on_points :: (Radius -> Radius) -> Point -> Point
-        expand_on_points f p = Point.Cylindrical (f r, a, h) where
+        expand_on_points f p = 
+            Paraboloid.onParaboloid parab $ Point.Cylindrical (f r, a, h) where
             (r,a,h) = Point.cylindrical p
 
 hardcoded_configuration :: Point -> Point

@@ -1,4 +1,5 @@
- {-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE ExtendedDefaultRules #-}
+
 module Main where
 import Test.QuickCheck
 import Data.List
@@ -26,14 +27,17 @@ splitByGroups n xs = map (snd . unzip) $ groupBy f (enumerate xs) where
     f (i0,_) (i1,_) = mod i0 n == 0 && mod i1 n /= 0
 triple xs = (xs !! 0, xs !! 1, xs !! 2)
 testSet :: String -> [(Double,Double,Double)]
-testSet = map triple . filter ( (>=3). length) . splitByGroups 3 . map read . lines 
+testSet = map triple . filter ( (>=3). length) . splitByGroups 3 . map read . Prelude.lines 
+
+uncurry3 f (a,b,c) = f a b c
+   
 
 
 compare_rt focus point = (Point.radius $ on_parab, Point.radius $ co_point) where
     on_parab = Paraboloid.onParaboloid parab point
-    co_point = RT.reversedTransformation parab on_parab
+    co_point = RT.reversedPointTransformation parab on_parab
     parab    = Paraboloid.Paraboloid focus
 
 main = do
     numbers <- readFile "numbers.txt"
-    print $ unlines $ map show $ map (compare_rt 3 . Cylindrical) (testSet numbers)
+    print $ testSet numbers -- unlines $ map show $ map (compare_rt 3 . Cylindrical) (testSet numbers)s
