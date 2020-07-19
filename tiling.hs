@@ -1,15 +1,16 @@
 module Tiling where
 import Point hiding (hole)
 import Paraboloid
+import qualified StraightTransformation --hiding (hole)
 
-tile paraboloid =  
-  wearedTriangles $ wearedTriangle (configuredTransformation paraboloid)
+tile paraboloid density =  
+  wearedTriangles $ wearedTriangle (configuredTransformation density paraboloid)
 
 data Triangle = Triangle (Point,Point,Point) deriving (Show,Eq)
 
 data Transformation = Transformation (Paraboloid -> Point -> Point)
 
-transformation parab p = Cylindrical (r,a,h) where
+transformation parab density p = Cylindrical (r,a,h) where
   (r,a,h) = hole
 
 
@@ -17,9 +18,9 @@ wearedPoint    :: Transformation -> Paraboloid -> Point -> Point
 wearedTriangle :: (Point -> Point)       -> Triangle   -> Triangle
 wearedTriangles:: (Triangle -> Triangle) -> [Triangle] -> [Triangle]
 
-tile :: Paraboloid -> [Triangle] -> [Triangle]
+tile :: Paraboloid -> Float -> [Triangle] -> [Triangle]
 
-configuredTransformation :: Paraboloid -> Point -> Point
+configuredTransformation :: Float -> Paraboloid -> Point -> Point
 
 wearedPoint (Transformation f) paraboloid = 
   f paraboloid
@@ -28,8 +29,9 @@ wearedPoint (Transformation f) paraboloid =
 wearedTriangle transformation (Triangle (a,b,c)) = 
   Triangle (f a,f b,f c) where f = transformation
 
-configuredTransformation = 
-  wearedPoint (Transformation transformation)
+configuredTransformation density = 
+   wearedPoint ( Transformation $ undefined {- StraightTransformation.transformation  -} density)
+
 wearedTriangles = map
 
 hole = undefined

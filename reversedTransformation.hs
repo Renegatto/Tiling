@@ -22,6 +22,3 @@ radius' :: ParabFocus -> Radius -> Radius
 radius' f r = (1/4/f) * big_expr - f * (log (2*f)) where
   big_expr = (r * scary_root) +  (4 * f**2) * (log . abs) (r + scary_root)
   scary_root = sqrt (r**2 + 4*f**2)
-
---(1/4/x) * (y * (sqrt(y**2 + 4*x**2))  +  (4 * x**2) * ln(abs(y + (sqrt(y**2 + 4*x**2))))) - x * ln(2*x)
---(sqrt(y**2 + 4*x**2))
