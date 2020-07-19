@@ -7,15 +7,13 @@ tile paraboloid =
 
 data Triangle = Triangle (Point,Point,Point) deriving (Show,Eq)
 
-data Compensation = Compensation (Paraboloid -> Point -> Point)
-data Projection   = Projection   (Paraboloid -> Point -> Point)
+data Transformation = Transformation (Paraboloid -> Point -> Point)
 
-compensation parab p = Cylindrical (r,a,h) where
-  (r,a,h) = hole
-projection   parab p = Cylindrical (r,a,h) where
+transformation parab p = Cylindrical (r,a,h) where
   (r,a,h) = hole
 
-wearedPoint    :: (Compensation, Projection) -> Paraboloid -> Point -> Point
+
+wearedPoint    :: Transformation -> Paraboloid -> Point -> Point
 wearedTriangle :: (Point -> Point)       -> Triangle   -> Triangle
 wearedTriangles:: (Triangle -> Triangle) -> [Triangle] -> [Triangle]
 
@@ -23,14 +21,15 @@ tile :: Paraboloid -> [Triangle] -> [Triangle]
 
 configuredTransformation :: Paraboloid -> Point -> Point
 
-wearedPoint (Compensation f, Projection g) paraboloid = 
-  g paraboloid . f paraboloid
+wearedPoint (Transformation f) paraboloid = 
+  f paraboloid
+
 
 wearedTriangle transformation (Triangle (a,b,c)) = 
   Triangle (f a,f b,f c) where f = transformation
 
 configuredTransformation = 
-  wearedPoint (Compensation compensation, Projection projection)
+  wearedPoint (Transformation transformation)
 wearedTriangles = map
 
 hole = undefined
