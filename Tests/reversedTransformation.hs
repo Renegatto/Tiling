@@ -32,4 +32,4 @@ prop_savingRadius mist focus p =
 check_saving_radius = Check.quickCheck $ Check.withMaxSuccess 100 prop where
     prop = (prop_savingRadius 5) 
 
-hole = undefined
+--hole = undefined

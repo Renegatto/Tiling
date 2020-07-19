@@ -5,7 +5,7 @@ data Point =
   Cartesian (Double,Double,Double)
   |Cylindrical (Double,Double,Double) deriving (Show,Eq)
 
-hole = undefined
+--hole = undefined
 
 class Point3 p where
   cartesian :: p -> (Double,Double,Double)

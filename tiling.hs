@@ -11,10 +11,6 @@ data Triangle = Triangle (Point,Point,Point) deriving (Show,Eq)
 
 data Transformation = Transformation (Paraboloid -> Point -> Point)
 
-transformation parab density p = Cylindrical (r,a,h) where
-  (r,a,h) = hole
-
-
 wearedPoint    :: Transformation -> Paraboloid -> Point -> Point
 wearedTriangle :: (Point -> Point)       -> Triangle   -> Triangle
 wearedTriangles:: (Triangle -> Triangle) -> [Triangle] -> [Triangle]
@@ -38,4 +34,4 @@ configuredTransformation =
 
 wearedTriangles = map
 
-hole = undefined
+--hole = undefined
