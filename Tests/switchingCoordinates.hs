@@ -5,10 +5,10 @@ import Data.Either (Either)
 import qualified Test.QuickCheck as Check
 import Tests hiding (mistake)
 
-import qualified Paraboloid
-import Paraboloid (Paraboloid)
-import qualified Point
-import Point (Point)
+import qualified Data.Paraboloid as Paraboloid
+import Data.Paraboloid (Paraboloid)
+import qualified  Data.Point as Point
+import Data.Point (Point)
 
 type Coords = (Double,Double,Double)
 

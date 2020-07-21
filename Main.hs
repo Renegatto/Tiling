@@ -3,8 +3,8 @@
 module Main where
 import Test.QuickCheck
 import Data.List
-import Point
-import Paraboloid
+import Data.Point as Point
+import Data.Paraboloid as Paraboloid
 import ReversedTransformation as RT
 import qualified StraightTransformation
 import qualified Tests

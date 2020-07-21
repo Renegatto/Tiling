@@ -1,5 +1,5 @@
-module Paraboloid where
-import Point hiding (hole)
+module Data.Paraboloid where
+import Data.Point hiding (hole)
 
 data Paraboloid = Paraboloid Double deriving (Show,Eq)
 

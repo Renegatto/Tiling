@@ -1,4 +1,4 @@
-module Point where
+module Data.Point where
 import Control.Arrow
 
 data Point =

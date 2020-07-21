@@ -1,8 +1,8 @@
 module ReversedTransformation where
 
-import qualified Point hiding (hole)
-import Point(Point)
-import Paraboloid
+import qualified Data.Point as Point hiding (hole)
+import Data.Point(Point)
+import Data.Paraboloid
 
 type RadiusOnParaboloid = Double
 type RadiusOnPlane = Double

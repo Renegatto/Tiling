@@ -3,10 +3,10 @@
 module StraightTransformation where
 import qualified ReversedTransformation as Reversed
 
-import qualified Point
-import qualified Paraboloid
-import Paraboloid(Paraboloid)
-import Point (Point)
+import qualified Data.Paraboloid as Paraboloid
+import Data.Paraboloid (Paraboloid)
+import qualified  Data.Point as Point
+import Data.Point (Point)
 
 import qualified CalculationMethods.ApproximateCalculations as CalcMethod
 type Radius = Double

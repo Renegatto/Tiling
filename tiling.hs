@@ -1,6 +1,6 @@
 module Tiling where
-import Point hiding (hole)
-import Paraboloid
+import Data.Point hiding (hole)
+import Data.Paraboloid
 import qualified StraightTransformation --hiding (hole)
 import qualified CalculationMethods.ApproximateCalculations as CalcMethod
 
