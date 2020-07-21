@@ -31,7 +31,7 @@ identitySwitchingResult m point =
     ((p0,res0),(p1,res1)) = identitySwitch m (Point.Cartesian point)
 
 prop_isReversable :: Mistake -> Coords -> Bool
-prop_isReversable mist = Either.isRight . identitySwitchingResult mist
+prop_isReversable mist = Either.isRight . identitySwitchingResult mist 
 
-check_is_reversable = Check.quickCheck $ Check.withMaxSuccess 100 prop where
+check_is_reversable = Check.quickCheck $ Check.withMaxSuccess 10000 prop where
     prop = prop_isReversable (Mistake 0.0006)

@@ -17,9 +17,9 @@ import Tiling
 -- quickCheck $ withMaxSuccess 50 (transformationSavingRadius op3)
 
 run_tests = do
-    _ <- Tests.ReversedTransformation.check_saving_radius
+    _ <- Tests.ReversedTransformation.check_saving_distance
+    _ <- Tests.ReversedTransformation.check_radius_growing
     Tests.SwitchingCoordinates.check_is_reversable
-
 
 enumerate xs = zip (take (length xs) [0..]) xs
 splitByGroups n xs = map (snd . unzip) $ groupBy f (enumerate xs) where
@@ -37,6 +37,13 @@ compare_rt focus point = (Point.radius $ on_parab, Point.radius $ co_point) wher
     on_parab = Paraboloid.onParaboloid parab point
     co_point = RT.reversedPointTransformation parab on_parab
     parab    = Paraboloid.Paraboloid focus
+
+compare_d focus point = (distance_to_center on_parab, distance_to_center $ to_plane $ co_point) where
+    on_parab = Paraboloid.onParaboloid parab point
+    co_point = RT.reversedPointTransformation parab on_parab
+    parab    = Paraboloid.Paraboloid focus
+    to_plane p = (\(r,a,h) -> Point.Cylindrical (r,a,-focus)) $ Point.cylindrical p
+    distance_to_center = Point.distance $ Point.Cartesian (0,0,-focus)
 
 main = do
     numbers <- readFile "numbers.txt"

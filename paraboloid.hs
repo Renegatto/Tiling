@@ -11,3 +11,5 @@ onParaboloid (Paraboloid focus) p =
   Cartesian (x,y,z') where
     (x,y,_) = cartesian p
     z' = paraboloid x y focus
+
+-- (x^2 + y^2) / 4 / 15 - 15
