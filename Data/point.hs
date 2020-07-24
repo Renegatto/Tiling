@@ -14,7 +14,13 @@ class Point3 p where
   height :: p -> Double
   radius :: p -> Double
   distance :: p -> p -> Double
+  map_x :: (Double -> Double) -> p -> p
+  map_y :: (Double -> Double) -> p -> p
+  map_z :: (Double -> Double) -> p -> p
 
+  map_r :: (Double -> Double) -> p -> p
+  map_a :: (Double -> Double) -> p -> p
+  map_h :: (Double -> Double) -> p -> p
 instance Point3 Point where
 
   cartesian (Cartesian p) = p
@@ -45,7 +51,23 @@ instance Point3 Point where
     sqrt (x**2 + y**2 + z**2) where
       ((x0,y0,z0),(x1,y1,z1)) = cartesian *** cartesian $ (p0,p1)
       (x,y,z) = (x0-x1,y0-y1,z0-z1)
+
+  map_x f (Cartesian (x,y,z)) = Cartesian (f x,y,z)
+  map_x f p = map_x f (Cartesian $ cartesian p)
+
+  map_y f (Cartesian (x,y,z)) = Cartesian (x,f y,z)
+  map_y f p = map_y f (Cartesian $ cartesian p)
+
+  map_z f (Cartesian (x,y,z)) = Cartesian (x,y,f z)
+  map_z f (Cylindrical (r,a,h)) = Cylindrical (r,a,f h)
   
+  map_r f (Cylindrical (r,a,h)) = Cylindrical (f r,a,h)
+  map_r f p = map_r f (Cylindrical $ cylindrical p)
+
+  map_a f (Cylindrical (r,a,h)) = Cylindrical (r,f a,h)
+  map_a f p = map_a f (Cylindrical $ cylindrical p)
+
+  map_h = map_z
 angle_from :: Double -> Double -> Double
 angle_from cosa sina = 
     case (right_halfcircle,upper_halfcircle) of
