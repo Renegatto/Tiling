@@ -16,10 +16,10 @@ instance ToJSON Triangles.BoundedTriangles where
 
 instance (ToJSON a) => ToJSON (Node a) where
     toJSON (Nodes.Node x trgs) = JSON.object [
-        "Node" .= 
-            JSON.object [
-            "Point?" .=  x,
-            "Triangles" .= trgs
+        "Node" .= JSON.object 
+            [
+                "data" .= x,
+                "triangles" .= trgs
             ]
         
         ]
