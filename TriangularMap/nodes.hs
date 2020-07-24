@@ -11,7 +11,7 @@ data Node a = Node a BoundedTriangles deriving (Eq,Show)
 instance Functor Node where
     fmap f (Node x trgs) = Node (f x) trgs
 
-type SideLength = Double -- heightFromSideLength
+type SideLength = Double
 type Row = Int
 
 line :: SideLength -> Row -> [BoundedTriangles] -> [Node Point]
@@ -23,3 +23,6 @@ line side_length row =
 
 calculate :: SideLength -> [BoundedTriangles] -> [[Node Point]]
 calculate side = zipWith (line side) [0..] . Triangles.groupByLines
+
+calculateGrouped :: SideLength -> [[BoundedTriangles]] -> [[Node Point]]
+calculateGrouped side = zipWith (line side) [0..]
