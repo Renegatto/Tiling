@@ -4,26 +4,28 @@ import Data.Paraboloid
 import qualified StraightTransformation --hiding (hole)
 import qualified CalculationMethods.ApproximateCalculations as CalcMethod
 
+import qualified TriangularMap.Nodes as Nodes
+import TriangularMap.Nodes (Node)
+
 tile paraboloid density =  
   wearedTriangles $ wearedTriangle (configuredTransformation paraboloid)
 
-data Triangle = Triangle (Point,Point,Point) deriving (Show,Eq)
+-- data Triangle = Triangle (Point,Point,Point) deriving (Show,Eq)
 
 data Transformation = Transformation (Paraboloid -> Point -> Point)
 
 wearedPoint    :: Transformation -> Paraboloid -> Point -> Point
-wearedTriangle :: (Point -> Point)       -> Triangle   -> Triangle
-wearedTriangles:: (Triangle -> Triangle) -> [Triangle] -> [Triangle]
+wearedTriangle :: (Point -> Point) -> Node Point -> Node Point
+wearedTriangles:: (Node Point -> Node Point) -> [Node Point] -> [Node Point]
 
-tile :: Paraboloid -> Float -> [Triangle] -> [Triangle]
+tile :: Paraboloid -> Float -> [Node Point] -> [Node Point]
 
 configuredTransformation :: Paraboloid -> Point -> Point
 
 wearedPoint (Transformation f) paraboloid = 
   f paraboloid
 
-wearedTriangle transformation (Triangle (a,b,c)) = 
-  Triangle (f a,f b,f c) where f = transformation
+wearedTriangle transformation = fmap transformation 
 
 calculationsConfigurations :: StraightTransformation.FunctionReversing
 calculationsConfigurations = 
