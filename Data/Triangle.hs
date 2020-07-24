@@ -1,5 +1,5 @@
 module Data.Triangle where
-import TriangularMap (BoundedTriangles)
+--import TriangularMap (BoundedTriangles)
 
 heightFromSideLength :: Double -> Double
 heightFromSideLength = (sqrt 3 *) 
