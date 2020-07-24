@@ -11,6 +11,14 @@ import qualified Tests
 import qualified Tests.ReversedTransformation
 import qualified Tests.SwitchingCoordinates
 
+import qualified Parser
+import qualified TriangularMap.Triangles as Triangles
+import qualified TriangularMap.Nodes as Nodes
+
+import qualified Data.ByteString.Lazy.Char8 as LC
+
+import qualified Data.Aeson as JSON
+
 import Tiling
 
 -- quickCheck $ withMaxSuccess 500 (transitive op3 op2)
@@ -45,6 +53,10 @@ compare_d focus point = (distance_to_center on_parab, distance_to_center $ to_pl
     to_plane p = (\(r,a,h) -> Point.Cylindrical (r,a,-focus)) $ Point.cylindrical p
     distance_to_center = Point.distance $ Point.Cartesian (0,0,-focus)
 
+trgs = Triangles.tripoints 5 7
+nodes = Nodes.calculateGrouped 2.3 trgs
+
 main = do
-    numbers <- readFile "numbers.txt"
-    print $ testSet numbers -- unlines $ map show $ map (compare_rt 3 . Cylindrical) (testSet numbers)s
+    LC.putStrLn $ JSON.encode nodes -- do
+    -- numbers <- readFile "numbers.txt"
+    -- print $ testSet numbers -- unlines $ map show $ map (compare_rt 3 . Cylindrical) (testSet numbers)s
