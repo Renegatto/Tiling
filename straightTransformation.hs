@@ -31,12 +31,11 @@ functionReversing dist dens fn =
 transformation :: FunctionReversing -> Paraboloid -> Point -> Point
 transformation reversing parab =  
 
-    expand_on_points $ reversing $ Reversed.reversedRadiusTransformation parab where
+    expand_on_points $ reversing (Reversed.reversedRadiusTransformation parab) where
 
         expand_on_points :: (Radius -> Radius) -> Point -> Point
-        expand_on_points f p = 
-            Paraboloid.onParaboloid parab $ Point.Cylindrical (f r, a, h) where
-            (r,a,h) = Point.cylindrical p
+        expand_on_points f = 
+            Paraboloid.onParaboloid parab . Point.map_r f
 
 hardcoded_configuration :: Point -> Point
 hardcoded_configuration = 
