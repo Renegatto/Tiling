@@ -22,7 +22,7 @@ line side_length row =
         y_offset = height * fromIntegral row
 
 calculate :: SideLength -> [BoundedTriangles] -> [[Node Point]]
-calculate side = zipWith (line side) [0..] . Triangles.groupByLines
+calculate side = calculateGrouped side . Triangles.groupByLines
 
 calculateGrouped :: SideLength -> [[BoundedTriangles]] -> [[Node Point]]
 calculateGrouped side = zipWith (line side) [0..]
