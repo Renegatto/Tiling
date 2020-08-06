@@ -11,14 +11,14 @@ import qualified Tests
 import qualified Tests.ReversedTransformation
 import qualified Tests.SwitchingCoordinates
 
-import qualified Parser
+import qualified Out.Serialization as Out
 import qualified TriangularMap.Triangles as Triangles
 import qualified TriangularMap.Nodes as Nodes
 
 import qualified Data.ByteString.Lazy.Char8 as LC
 import qualified System.IO as SIO
 import qualified Data.Aeson as JSON
-
+import Control.Monad(join)
 import Tiling
 
 
@@ -28,7 +28,8 @@ null_z = Point.map_z $ const $ -0.35
 par = (Paraboloid.Paraboloid 0.35)
 
 trgs = Triangles.tripoints 7 7
-nodes = fmap null_z $ Nodes.Lines $ Nodes.calculateGrouped 2.3 trgs
+
+nodes  = fmap null_z $ Nodes.Lines $ Nodes.calculateGrouped 2.3  trgs
 nodes' = fmap null_z $ Nodes.Lines $ Nodes.calculateGrouped 0.47 trgs
 
 tiled = 
@@ -40,6 +41,13 @@ tiled_and_nulled = fmap null_z tiled
 
 on_parab = fmap (Paraboloid.onParaboloid par) nodes'
 
+max_distances_tria = 
+    Nodes.maxDistancesBetweenApexes 
+    ${-Nodes.nodesToTriangles $-} Nodes.Nodes
+    $ join $ extr tiled
+
+tria n = Nodes.triangle n $ Nodes.Nodes $ foldl (++) [] $ extr nodes
+
 main = do
     LC.writeFile "out/on_paraboloid.bin" (JSON.encode 
         $ extr $ on_parab)
@@ -48,8 +56,11 @@ main = do
     LC.writeFile "out/tiled_and_nulled.bin" (JSON.encode 
         $ extr $ tiled_and_nulled)
     LC.writeFile "out/triangular_map.bin" (JSON.encode 
-        $ extr $ nodes' )--nodes)
-
+        $ extr $ nodes' )
+    LC.writeFile "out/distancesBetweenNodes.bin" (JSON.encode max_distances_tria)--nodes)
+    print $ tria 9
+    
+    --Triangles.tripoints 5 4
     -- LC.putStrLn $ JSON.encode nodes -- do
     -- numbers <- readFile "numbers.txt"
     -- print $ testSet numbers -- unlines $ map show $ map (compare_rt 3 . Cylindrical) (testSet numbers)s
